@@ -29,9 +29,9 @@ app.post('/login', loginController);
 
 //Rutas de Links
 app.post('/', authUser, newLinkController);
-app.get('/', getLinksController);
+app.get('/all', getLinksController);
 app.get('/link/:id', getSingleLinkController);
-app.delete('/link/:id', deleteLinkController);
+app.delete('/link/:id', authUser, deleteLinkController);
 
 // Middleware de 404
 app.use((req, res) => {

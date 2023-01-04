@@ -32,7 +32,8 @@ async function main() {
         title VARCHAR(200) NOT NULL,
         description VARCHAR(5000) NOT NULL,
       id_user INT UNSIGNED NOT NULL,
-        FOREIGN KEY (id_user) REFERENCES users (id)
+        FOREIGN KEY (id_user) REFERENCES users (id),
+        createdLink DATETIME DEFAULT CURRENT_TIMESTAMP
     )
     `);
 
