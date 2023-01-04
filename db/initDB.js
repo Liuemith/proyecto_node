@@ -20,7 +20,7 @@ async function main() {
       id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         email VARCHAR(100) UNIQUE NOT NULL,
         password VARCHAR(100) NOT NULL,
-        nombre VARCHAR(50) NOT NULL,
+         nombre VARCHAR(50) NOT NULL,
         biography VARCHAR(3000)
     );
     `);
@@ -28,11 +28,11 @@ async function main() {
         await connection.query(`
     CREATE TABLE IF NOT EXISTS links (
       id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        URL VARCHAR (1000) NOT NULL,
+        url VARCHAR (1000) NOT NULL,
         title VARCHAR(200) NOT NULL,
         description VARCHAR(5000) NOT NULL,
-      id_users INT UNSIGNED NOT NULL,
-        FOREIGN KEY (id_users) REFERENCES users (id)
+      id_user INT UNSIGNED NOT NULL,
+        FOREIGN KEY (id_user) REFERENCES users (id)
     )
     `);
 

@@ -8,17 +8,14 @@ const newUserController = async (req, res, next) => {
         const { email, password, nombre } = req.body;
 
         if (!email || !password || !nombre) {
-            throw generateError(
-                'Debes enviuar un email, una password y un nombre',
-                400
-            );
+            throw generateError('Debes enviar un email y una password', 400);
         }
 
         const id = await createUser(email, password, nombre);
 
         res.send({
             status: 'ok',
-            message: `User created with id: ${id} `,
+            message: `User created with id: ${id}`,
         });
     } catch (error) {
         next(error);
@@ -28,10 +25,12 @@ const newUserController = async (req, res, next) => {
 const getUserController = async (req, res, next) => {
     try {
         const { id } = req.params;
+
         const user = await getUserById(id);
+
         res.send({
             status: 'ok',
-            message: user,
+            data: user,
         });
     } catch (error) {
         next(error);
@@ -45,18 +44,26 @@ const loginController = async (req, res, next) => {
         if (!email || !password) {
             throw generateError('Debes enviar un email y una password', 400);
         }
+
+        // Recojo los datos de la base de datos del usuario con ese email
         const user = await getUserByEmail(email);
 
+        // Comprueba que las contraseñas coincidan
         const validPassword = await bcrypt.compare(password, user.password);
 
         if (!validPassword) {
             throw generateError('La contraseña no coincide', 401);
         }
 
+        // Creo el payload del token
         const payload = { id: user.id };
+
+        // Firmo el token
         const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: '30d',
         });
+
+        // Envío el token
         res.send({
             status: 'ok',
             data: token,
