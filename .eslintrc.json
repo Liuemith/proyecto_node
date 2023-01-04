@@ -5,12 +5,11 @@
         "node": true
     },
     "extends": "eslint:recommended",
-    "overrides": [
-    ],
+    "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
     "rules": {
-        "no-unused-vars": "off"
+        "no-unused-vars": ["error", { "argsIgnorePatterns": "next" }]
     }
 }
