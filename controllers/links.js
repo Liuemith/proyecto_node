@@ -30,7 +30,7 @@ const newLinkController = async (req, res, next) => {
     }
 };
 
-getLinksController = async (req, res, next) => {
+const getLinksController = async (req, res, next) => {
     try {
         const links = await getAllLinks();
 
