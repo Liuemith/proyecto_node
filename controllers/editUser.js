@@ -3,12 +3,7 @@
 */
 const jwt = require('jsonwebtoken');
 const { generateError } = require('../helpers');
-const {
-    createUser,
-    getUserById,
-    getUserByEmail,
-    getConnection,
-} = require('../db/users');
+const { getConnection } = require('../db/db');
 
 const editUser = async (req, res, next) => {
     let connection;
