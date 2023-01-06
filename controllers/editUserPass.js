@@ -2,7 +2,7 @@
     Controlador para editar la contraseña del usuario
 */
 
-const getConnection = require('../db/users');
+const getConnection = require('../db/db');
 const jwt = require('jsonwebtoken');
 const { generateError } = require('../../helpers');
 const bcrypt = require('bcrypt');
