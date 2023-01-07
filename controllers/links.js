@@ -59,18 +59,18 @@ const deleteLinkController = async (req, res, next) => {
         //req.userId
         const { id } = req.params;
 
-        // Conseguir la información del tweet que quiero borrar
+        // Conseguir la información del enlace que quiero borrar
         const link = await getLinkById(id);
 
-        // Comprobar que el usuario del token es el mismo que creó el tweet
+        // Comprobar que el usuario del token es el mismo que creó el enlace
         if (req.userId !== link.user_id) {
             throw generateError(
-                'Estás intentando borrar un link que no es tuyo',
+                'Estás intentando borrar un enlace que no es tuyo',
                 401
             );
         }
 
-        // Borrar el tweet
+        // Borrar el enlace
         await deleteLinkById(id);
 
         res.send({
