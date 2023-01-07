@@ -65,7 +65,7 @@ const deleteLinkById = async (id) => {
 
         await connection.query(
             `
-        DELETE FROM tweets WHERE id = ?
+        DELETE FROM links WHERE id = ?
       `,
             [id]
         );
