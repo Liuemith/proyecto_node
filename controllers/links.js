@@ -45,9 +45,12 @@ const getLinksController = async (req, res, next) => {
 
 const getSingleLinkController = async (req, res, next) => {
     try {
+        const { id } = req.params;
+        const link = await getLinkById(id);
+
         res.send({
-            status: 'error',
-            message: 'Not implemented',
+            status: 'ok',
+            data: link,
         });
     } catch (error) {
         next(error);
@@ -63,7 +66,7 @@ const deleteLinkController = async (req, res, next) => {
         const link = await getLinkById(id);
 
         // Comprobar que el usuario del token es el mismo que creó el enlace
-        if (req.userId !== link.user_id) {
+        if (req.userId !== link.id_user) {
             throw generateError(
                 'Estás intentando borrar un enlace que no es tuyo',
                 401

@@ -13,6 +13,7 @@ const editUser = require('./controllers/editUser');
 const editUserPass = require('./controllers/editUserPass');
 const addVotes = require('./controllers/addVotes');
 const calculateAverageVotes = require('./controllers/calculateAverageVotes');
+const addVoto = require('./controllers/voto');
 
 const {
     getLinksController,
@@ -38,13 +39,14 @@ app.put('/users/password', authUser, editUserPass);
 
 //Rutas de Links
 app.post('/', authUser, newLinkController);
-app.get('/all', getLinksController);
-app.get('/link/:id', getSingleLinkController);
+app.get('/all', authUser, getLinksController);
+app.get('/link/:id', authUser, getSingleLinkController);
 app.delete('/link/:id', authUser, deleteLinkController);
 
 //Rutas de votos
 // Votar un enlace
 app.post('/votos/:id_links/voto', authUser, addVotes);
+app.post('/voto/:id_links', authUser, addVoto);
 
 // Sacar la media de los votos de un enlace
 app.get('/votos/:id_links/avg-voto', calculateAverageVotes);
@@ -69,5 +71,5 @@ app.use((error, req, res, next) => {
 
 // Lanzamos el servidor
 app.listen(4000, () => {
-    console.log('Servidor funcionando perfectamente 🤩');
+    console.log('Servidor funcionando perfectamente 4000 🤩');
 });

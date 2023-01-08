@@ -2,9 +2,9 @@
     Controlador para editar la contraseña del usuario
 */
 
-const getConnection = require('../db/db');
+const { getConnection } = require('../db/db');
 const jwt = require('jsonwebtoken');
-const { generateError } = require('../../helpers');
+const { generateError } = require('../helpers');
 const bcrypt = require('bcrypt');
 
 let saltRounds = 10;
@@ -16,7 +16,7 @@ const editUserPass = async (req, res, next) => {
         connection = await getConnection();
 
         // Guardamos el id del usuario que ha iniciado sesion
-        const idAuthUser = req.authUser.id;
+        const idAuthUser = req.authUser;
 
         // Recuperamos del req.body los datos necesarios
         const { email, newPass, confirmNewPass } = req.body;
@@ -37,12 +37,12 @@ const editUserPass = async (req, res, next) => {
             [idAuthUser]
         );
         // Si ese email no coincide con el que recibimos en el req.body lanzamos un error
-        if (email !== user[0].email) {
-            throw generateError(
-                '¡El email debe coincidir con el usuario que ha hecho login!',
-                401
-            ); // Unauthorized
-        }
+        // if (email !== user[0].email) {
+        //     throw generateError(
+        //         '¡El email debe coincidir con el usuario que ha hecho login!',
+        //         401
+        //     ); // Unauthorized
+        // }
 
         // Encriptamos la nueva contraseña
         const hashedPassword = await bcrypt.hash(newPass, saltRounds);

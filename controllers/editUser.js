@@ -12,7 +12,7 @@ const editUser = async (req, res, next) => {
         connection = await getConnection();
 
         // Guardamos el id del usuario que ha iniciado sesion
-        const idAuthUser = req.authUser.id;
+        const idUserAuth = req.userAuth;
 
         // Recuperamos el nuevo email y nombre de usuario del cuerpo de la peticion
         const { newEmail, newName } = req.body;
@@ -35,19 +35,15 @@ const editUser = async (req, res, next) => {
         }
 
         // Seleccionamos los datos antiguos del usuario que ha iniciado sesion
-        const [authUser] = await connection.query(
+        const [userAuth] = await connection.query(
             `SELECT email, nombre FROM users WHERE id = ?`,
-            [idAuthUser]
+            [idUserAuth]
         );
 
         // Modificamos los datos
         await connection.query(
             `UPDATE users SET email = ?, nombre = ? WHERE id = ?`,
-            [
-                newEmail || authUser[0].email,
-                newName || authUser[0].username,
-                idAuthUser,
-            ]
+            [newEmail, newName, idUserAuth]
         );
 
         res.send({

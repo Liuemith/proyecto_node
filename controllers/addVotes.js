@@ -4,15 +4,15 @@
 const jwt = require('jsonwebtoken');
 const { generateError } = require('../helpers');
 const { getConnection } = require('../db/db');
+const { authUser } = require('../middlewares/auth');
 
 const addVotes = async (req, res, next) => {
     let connection;
-
+    const idAuthUser = req.authUser;
     try {
         connection = await getConnection();
 
         // Guardamos el id del usuario que ha iniciado sesion
-        const idAuthUser = req.authUser.id;
 
         // Destructuramos el id del enlace de los path params
         const { insertId } = req.params;
@@ -24,7 +24,7 @@ const addVotes = async (req, res, next) => {
         );
 
         // Si el idUser de la consulta es igual al id del usuario logueado
-        if (link[0].id_users === idAuthUser) {
+        if ({ insertId } === idAuthUser) {
             throw generateError('No puedes dar likes a tus publicaciones', 409);
         }
 
