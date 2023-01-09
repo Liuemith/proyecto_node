@@ -8,9 +8,7 @@ consideren interesantes. Otros usuarios podrán votarlos si les gustan.
 -   Crear una base de datos vacía en una instancia MySQL en local.
 -   CREATE DATABASE IF NOT EXISTS SOCIAL_LINKS;
 
--   Copiar el archivo `.env.example` como `.env` y rellenar las variables de entorno con sus datos necesarios.
-
--   Crear la carpeta `static` en la raiz del proyecto con las subcarpetas `static/avatar` y `static/product`.
+-   Crear el archivo `.env` y rellenar las variables de entorno con sus datos necesarios.
 
 -   Ejecutar `npm i` para instalar todas las dependencias necesarias.
 
