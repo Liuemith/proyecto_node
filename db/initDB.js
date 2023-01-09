@@ -40,7 +40,7 @@ async function main() {
         await connection.query(`
     CREATE TABLE IF NOT EXISTS votos (
       id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-       voto INT UNSIGNED,
+       voto INT UNSIGNED NOT NULL,
         id_users INT UNSIGNED NOT NULL,
         id_links INT UNSIGNED NOT NULL,
         FOREIGN KEY (id_users) REFERENCES users (id),
