@@ -8,7 +8,9 @@ consideren interesantes. Otros usuarios podrán votarlos si les gustan.
 -   Crear una base de datos vacía en una instancia MySQL en local.
 -   CREATE DATABASE IF NOT EXISTS SOCIAL_LINKS;
 
--   Crear el archivo `.env` y rellenar las variables de entorno con sus datos necesarios.
+-   Copiar el archivo `.env.example` como `.env` y rellenar las variables de entorno con sus datos necesarios.
+
+-   Crear la carpeta `static` en la raiz del proyecto con las subcarpetas `static/avatar` y `static/product`.
 
 -   Ejecutar `npm i` para instalar todas las dependencias necesarias.
 
@@ -31,11 +33,10 @@ consideren interesantes. Otros usuarios podrán votarlos si les gustan.
 ### Enlaces
 
 -   POST[/] - Inserta un nuevo enlace. TOKEN.
--   GET[/all] - Devuelve todos los enlaces publicados, ordenados por fecha (desc). TOKEN.
+-   GET[/all] - Devuelve todos los enlaces publicados, ordenados por fecha (desc). y con la media de votos (en caso los hubiera) TOKEN.
 -   GET[/link/:id] - Devuelve un enlace en base a su id. TOKEN.
 -   DELETE[/link/:id] - Elimina un enlace. TOKEN.
 
 ### Votos
 
--   POST[/votos/:id_links/voto] - Vota un enlace. TOKEN.
--   GET[/votos/:id_links/avg-voto] - Devuelve la media de los votos de un enlace. TOKEN.
+-   POST[/votos/:idLink] - Vota un enlace. TOKEN.
