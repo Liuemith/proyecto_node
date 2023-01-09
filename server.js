@@ -13,7 +13,6 @@ const editUser = require('./controllers/editUser');
 const editUserPass = require('./controllers/editUserPass');
 const addVotes = require('./controllers/addVotes');
 const calculateAverageVotes = require('./controllers/calculateAverageVotes');
-const addVoto = require('./controllers/voto');
 
 const {
     getLinksController,
@@ -45,11 +44,7 @@ app.delete('/link/:id', authUser, deleteLinkController);
 
 //Rutas de votos
 // Votar un enlace
-app.post('/votos/:id_links/voto', authUser, addVotes);
-app.post('/voto/:id_links', authUser, addVoto);
-
-// Sacar la media de los votos de un enlace
-app.get('/votos/:id_links/avg-voto', calculateAverageVotes);
+app.post('/votos/:idLink', authUser, addVotes);
 
 // Middleware de 404
 app.use((req, res) => {
@@ -70,6 +65,7 @@ app.use((error, req, res, next) => {
 });
 
 // Lanzamos el servidor
-app.listen(4000, () => {
-    console.log('Servidor funcionando perfectamente 4000 🤩');
+const puerto = 4000;
+app.listen(puerto, () => {
+    console.log(`Servidor funcionando perfectamente en el puerto ${puerto} 🤩`);
 });
