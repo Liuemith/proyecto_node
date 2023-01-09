@@ -12,7 +12,6 @@ const {
 const editUser = require('./controllers/editUser');
 const editUserPass = require('./controllers/editUserPass');
 const addVotes = require('./controllers/addVotes');
-const calculateAverageVotes = require('./controllers/calculateAverageVotes');
 
 const {
     getLinksController,
