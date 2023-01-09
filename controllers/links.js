@@ -5,14 +5,29 @@ const {
     deleteLinkById,
 } = require('../db/links');
 
+const Joi = require('@hapi/joi');
+
 const { generateError } = require('../helpers');
 
 const newLinkController = async (req, res, next) => {
     console.log('usuario:', req.userId);
 
     try {
-        // Pendiente validar el body con JOI
-        const { title, url, description } = req.body;
+        //VALIDACION CON JOI
+        const schema = Joi.object().keys({
+            title: Joi.string().min(4).max(25).required(),
+            url: Joi.string().uri().required(),
+            description: Joi.string().min(5).max(200).required(),
+        });
+
+        const validation = schema.validate(req.body);
+
+        if (validation.error) {
+            throw generateError(validation.error.message);
+        }
+
+        // COMO ESTABA ANTES
+        // const { title, url, description } = req.body;
 
         const newLink = { title, url, description, idUser: req.userId };
 
@@ -45,7 +60,15 @@ const getLinksController = async (req, res, next) => {
 
 const getSingleLinkController = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        //Validación con JOI
+        const schema = Joi.number().positive().integer();
+        const validation = schema.validate(req.params.id);
+        if (validation.error) {
+            throw generateError(validation.error.message);
+        }
+        // COMO ESTABA ANTES
+        // const { id } = req.params;
+
         const link = await getLinkById(id);
 
         res.send({

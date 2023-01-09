@@ -2,14 +2,28 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { generateError } = require('../helpers');
 const { createUser, getUserById, getUserByEmail } = require('../db/users');
+const Joi = require('@hapi/joi');
 
 const newUserController = async (req, res, next) => {
     try {
-        const { email, password, nombre } = req.body;
+        //Validación con JOI
+        const schema = Joi.object().keys({
+            email: Joi.string().email().required(),
+            password: Joi.string().min(8).max(20).required(),
+            nombre: Joi.string().min(3).max(10).required(),
+        });
 
-        if (!email || !password || !nombre) {
-            throw generateError('Debes enviar un email y una password', 400);
+        const validation = schema.validate(req.body);
+
+        if (validation.error) {
+            throw generateError(validation.error.message);
         }
+        //SIN JOI - como estaba antes
+        // const { email, password, nombre } = req.body;
+
+        // if (!email || !password || !nombre) {
+        //     throw generateError('Debes enviar un email y una password', 400);
+        // }
 
         const id = await createUser(email, password, nombre);
 
@@ -24,7 +38,14 @@ const newUserController = async (req, res, next) => {
 
 const getUserController = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        //Validación con JOI
+        const schema = Joi.number().positive().integer();
+        const validation = schema.validate(req.params.id);
+        if (validation.error) {
+            throw generateError(validation.error.message);
+        }
+        // COMO ESTABA ANTES
+        // const { id } = req.params;
 
         const user = await getUserById(id);
 
@@ -39,11 +60,24 @@ const getUserController = async (req, res, next) => {
 
 const loginController = async (req, res, next) => {
     try {
-        const { email, password } = req.body;
+        //Validación con JOI
+        const schema = Joi.object().keys({
+            email: Joi.string().email().required(),
+            password: Joi.string().min(8).max(20).required(),
+        });
 
-        if (!email || !password) {
-            throw generateError('Debes enviar un email y una password', 400);
+        const validation = schema.validate(req.body);
+
+        if (validation.error) {
+            throw generateError(validation.error.message);
         }
+
+        //COMO ESTABA ANTES
+        // const { email, password } = req.body;
+
+        // if (!email || !password) {
+        //     throw generateError('Debes enviar un email y una password', 400);
+        // }
 
         // Recojo los datos de la base de datos del usuario con ese email
         const user = await getUserByEmail(email);
